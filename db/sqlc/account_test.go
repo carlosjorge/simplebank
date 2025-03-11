@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func createRandonAccount(t *testing.T) Accounts {
+func CreateRandonAccount(t *testing.T) Accounts {
 	args := CreateAccountParams{
 		Owner:    util.RandomOwner(),
 		Balance:  util.RandomMoney(),
@@ -28,12 +28,12 @@ func createRandonAccount(t *testing.T) Accounts {
 }
 
 func TestCreateAccount(t *testing.T) {
-	account := createRandonAccount(t)
+	account := CreateRandonAccount(t)
 	require.NotEmpty(t, account)
 }
 
 func TestGetAccount(t *testing.T) {
-	account1 := createRandonAccount(t)
+	account1 := CreateRandonAccount(t)
 	account2, err := testQueries.GetAccount(context.Background(), account1.ID)
 	require.NoError(t, err)
 	require.NotEmpty(t, account2)
@@ -45,7 +45,7 @@ func TestGetAccount(t *testing.T) {
 }
 
 func TestUpdateAccount(t *testing.T) {
-	account1 := createRandonAccount(t)
+	account1 := CreateRandonAccount(t)
 
 	arg := UpdateAccountParams{
 		ID:      account1.ID,
@@ -64,7 +64,7 @@ func TestUpdateAccount(t *testing.T) {
 }
 
 func TestDeleteAccount(t *testing.T) {
-	account1 := createRandonAccount(t)
+	account1 := CreateRandonAccount(t)
 
 	err := testQueries.DeleteAccount(context.Background(), account1.ID)
 	require.NoError(t, err)
@@ -75,8 +75,8 @@ func TestDeleteAccount(t *testing.T) {
 }
 
 func TestListAccounts(t *testing.T) {
-	for i := 0; i < 10; i++ {
-		createRandonAccount(t)
+	for range 10 {
+		CreateRandonAccount(t)
 	}
 
 	arg := ListAccountsParams{
